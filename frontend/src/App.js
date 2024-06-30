@@ -8,15 +8,6 @@ import TreatmentPlan from './pages/TreatmentPlan';
 import AI from './pages/AI_Assistant';
 import YT_RecommendationView from './pages/YT_RecommendationView';
 
-// import { ClerkProvider, SignedIn, SignedOut, RedirectToSignIn, SignIn, SignUp } from '@clerk/clerk-react';
-
-// if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
-//    throw 'Missing Publishable Key';
-// }
-
-// const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
-
-/* import all components */
 import Register from './components/Register';
 import Username from './components/Username';
 import Password from './components/Password';
@@ -32,22 +23,22 @@ import YoutubePreferences from "./components/YoutubePreferences";
 const router = createBrowserRouter(
    createRoutesFromElements(
       <Route path="/">
-         <Route index element={<Username/>} />
-         {/* <Route index element={<Home />} /> */}
+         <Route  element={<Username/>} />
+         
          <Route path="/assistant" element={<AI />} />
          <Route path="/music-therapy" element={<MusicTherapy />} />
-         <Route path="/treatment-plan" element={<TreatmentPlan />} />
+         <Route path="/profile" element={<TreatmentPlan />} />
          <Route path="/yt-recommendation" element={<YT_RecommendationView />} />
          <Route path="/preferences" element={<YoutubePreferences />} />
 
-         <Route path="/register" element={<Register />} />
          {/* <Route path="/username" element={<Username />} /> */}
-         <Route path="/password" element={<ProtectRoute><Password /></ProtectRoute>} />
-         <Route path="/profile" element={<AuthorizeUser><Profile /></AuthorizeUser>} />
+         <Route path="/register" element={<Register />} />
+         <Route path="/password" element={<Password />} />
+         <Route path="/status" element={<Profile />} />
          <Route path="/reset" element={<Reset />} />
          <Route path="/recovery" element={<Recovery />} />
          <Route path="/pagenotfound" element={<PageNotFound />} />
-         <Route path="/home" element={<Home />} />
+         <Route  index  element={<Home />} />
       </Route>
    )
 );

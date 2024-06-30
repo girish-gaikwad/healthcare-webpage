@@ -58,26 +58,7 @@ const YT_RecommendationView = () => {
       }       
    };
   
-   // // useEffect(() => {
-   const handleSubmit = (e) => {
-      console.log(emotion)
-      console.log("get the emotion done...")
-
-      const categories = emotionCategories[emotion];
-      console.log(categories)
-      categories.forEach(category=> {
-            getVideoIdsByCategory(category)
-                .then(videoIds => {
-                    console.log(`Video IDs for category '${category}':`, videoIds);
-                    videoIds.map((videoId) => {
-                       console.log(videoId);
-                       console.log(`https://www.youtube.com/embed/${videoId}`);
-                    });         
-                })
-                .catch(error => console.error(error));
-      });
-   // })
-   }
+  
 
 //   }, [emotion]);
 
@@ -119,7 +100,9 @@ const YT_RecommendationView = () => {
 
    async function getVideoIdsByCategory(category) {
       const baseUrl = "https://www.googleapis.com/youtube/v3/search";
-      const API_KEY = "AIzaSyA3Yj4sKRset4eC-KWDDkiiFckWNdBXdaw";
+      // AIzaSyAVaTDu0itvwcxZFnSFDXzjJXwmRjHUmFM
+      // const API_KEY = "AIzaSyA3Yj4sKRset4eC-KWDDkiiFckWNdBXdaw";
+      const API_KEY = "AIzaSyAVaTDu0itvwcxZFnSFDXzjJXwmRjHUmFM";
       const videoIds = [];
    
       const params = {
@@ -346,7 +329,7 @@ const YT_RecommendationView = () => {
                         </div>
                      )}
 
-                     <button className='btn' onClick={handleSubmit}>View your recommendations</button> 
+                     {/* <button className='btn' >View your recommendations</button>  */}
 
                   </div>
                </div>

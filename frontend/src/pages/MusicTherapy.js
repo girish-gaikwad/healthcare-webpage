@@ -35,6 +35,7 @@ import { useAuthStore } from '../store/store';
 // import 'dotenv/config';
 
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 const qs = require('qs');
 
 const client_id = '85828d1937e346c8a174c74766c1bb89'; // Your client id
@@ -116,57 +117,7 @@ const MusicTherapy = () => {
    // const [trackIds, setTrackIds] = useState([]);
    const [trackData, setTrackData] = useState([]);
 
-   const handleSubmit = (e) => {
-      console.log(emotion)
-      console.log("get the emotion done...")
-      // const emo = JSON.parse(emotion)
-      console.log(typeof emotion)
-      // const data = {"mood": emotion}
-
-      axios.get(`http://localhost:5001/api/spotify_recommend`, { emotion: emotion } )
-      .then((response) => {
-         // const ytTrackIds = response.data.result;
-         console.log(response.data.result);
-         setTrackIds(JSON.parse(response.data.result));
-         // const parsedArray = JSON.parse(ytTrackIds);
-         // console.log(typeof parsedArray)
-         // trackIds.forEach(function(item) {
-         //    console.log(item.id);
-         //    // item = JSON.parse(item)
-         //    setTrackData((prevTrackData) => [...prevTrackData, item.id])
-         //  });
-          
-         // trackData.map((track, index) =>{
-         //    console.log(typeof track.id)
-         // })
-         //  console.log(newList)
-         //  newList.forEach(function(item2){
-         //    setTrackData((prevTrackData) => [...prevTrackData, ...ytTrackIds])
-         //  })
-         // setTrackData([ytTrackIds])
-         // console.log(trackIds)
-   //       // Store the track IDs in the trackData state
-   //       setTrackData(trackIds);
-   //       console.log(trackIds)
-      })
-      .catch((error) => {
-         console.error(error);
-      });
-   }
-
-   // useEffect(() =>  {
-   //    axios.get(`${process.env.SERVER_ENDPOINT}/api/spotify_recommend`, { mood: emotion })
-   //    .then((response) => {
-   //       const trackIds = response.data;
-   //       console.log(response.data);
-   //       // Store the track IDs in the trackData state
-   //       setTrackData(trackIds);
-   //    })
-   //    .catch((error) => {
-   //       console.error(error);
-   //    });
-   // });
-
+   
    const getTrackData = async (accessToken, trackIds) => {
       try {
          const promises = trackIds.map(async (trackId) => {
@@ -245,20 +196,11 @@ const MusicTherapy = () => {
                         )}
                      </div>
 
-                     <button className='btn' onClick={handleSubmit}>View your recommendations</button>
+<Link to={'/yt-recommendation'}>
+                     <button className='btn'>View your recommendations</button>
+</Link>
 
-                     {/*
-                        {getAudioFeatures_Track('1HNkqx9Ahdgi1Ixy2xkKkL') ? (
-                           <div>
-                              <p>content available</p>
-                              <p>JSON.stringify({getAudioFeatures_Track('1HNkqx9Ahdgi1Ixy2xkKkL')}, null, 2)</p>
-                           </div>
-                           ) : (
-                           <p>Loading audio features...</p>
-                           )}
-
-
-                        */}
+                  
                   </div>
                </div>
             </div>

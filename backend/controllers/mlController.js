@@ -3,6 +3,8 @@ import { error } from "console";
 import { writeFileSync, unlinkSync } from 'fs';
 import process from "process";
 
+// import car from  "../ml_models/Chatbot/chatbotkb.py"
+
 /** POST: http://localhost:5001/api/analyze */
 /** 
  * @param : {
@@ -11,18 +13,23 @@ import process from "process";
 */
 export async function analyzer(req, res) {
   const { message } = req.body;
+  console.log(message)
+
   try {
     // const process = spawn("/usr/src/app/venv/bin/python3", ["/usr/src/app/ml_models/Chatbot/chatbotkb.py", message,]);
-    const process = spawn("python3", ["../backend/ml_models/Chatbot/chatbotkb.py", message,]);
+    const process = spawn("python3", ["../ml_models/Chatbot/chatbotkb.py", message,]);
+
     // const process = spawn("python3", [`${process.env.BACKEND_URL}/chatbotkb.py`, message,]);
     console.log(message)
-
+    
     let result = "";
-
+    
     // Listen for data events from stdout
     process.stdout.on("data", (data) => {
       result += data.toString();
     });
+
+    console.log("logging result",result)
     // Listen for the 'close' event to handle the completion of the Python script
     process.on("close", (code) => {
       if (code === 0) {
@@ -35,6 +42,8 @@ export async function analyzer(req, res) {
       } else {
         
         res.status(500).json({ error: "Python script exited with an error" });
+        console.log("in back0",message)
+
       }
     });
 

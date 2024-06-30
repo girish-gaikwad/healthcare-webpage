@@ -13,7 +13,7 @@ const Header = () => {
       <header className="header--line">
          <div className="container header pt--24 pb--16">
             <div className="header__left">
-               <Link className="logo-link" to="/home">
+               <Link className="logo-link" to="/">
                   <img src={logo} alt="Depresio Logo" />
                </Link>
                <ul>

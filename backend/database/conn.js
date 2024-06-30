@@ -5,7 +5,8 @@ async function connect(){
 
     try {
         config();
-        const mongoString = process.env.DATABASE_URL;
+        // const mongoString = process.env.DATABASE_URL;
+        const mongoString = "mongodb+srv://girishgaikwad2055:9842123@chatapp.yo3eo5w.mongodb.net/chatapp";
         const database = await mongoose.connect(mongoString);
         console.log('Database Connected');
         return database;

@@ -4,7 +4,15 @@ import express from "express";
 import router from "./routes/routes.js";
 import cors from "cors";
 
+
+import bodyParser from 'body-parser';
+
+// const app = express();
+
+// parse application/json
+
 const app = express();
+app.use(bodyParser.json());
 
 // Define routes and middleware here
 

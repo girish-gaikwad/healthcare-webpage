@@ -6,7 +6,7 @@ const Footer = () => {
       <footer className="footer">
          <div className="footer__wrapper container">
             <div className="text--center">
-               <p>Copyright ©2023 Depresio | All Rights Reserved! </p>
+               <p>Done with contribution of open source and team tech bloomers</p>
             </div>
          </div>
       </footer>

@@ -73,7 +73,7 @@ export default function Profile() {
         <div className = "Profile_Wrapper" >
           <div className = "Profile_topbar" >
             <div className="wrapper_container">
-            <h3>Good Evening, {apiData?.firstName || apiData?.username}!🥳</h3>
+            <h3>Good Evening vibez!🥳</h3>
             </div>
             <div className="wrapper_container">
                    <button onClick={userLogout} className='btn' to="/">Logout</button>

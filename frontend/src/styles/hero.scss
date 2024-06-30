@@ -9,7 +9,8 @@
 }
 
 .hero {
-   background: url('../images/hero-bg.webp');
+   // background: url('../images/hero-bg.webp');
+   background: url('../images/image.png');
    background-position: 82% 0%;
    background-size: initial;
    padding: 0;
@@ -42,7 +43,7 @@
    h1 {
       font-size: 75px;
       line-height: 78px;
-      background: linear-gradient(187deg, #7ee787 0%, #543c82 100%);
+      background: linear-gradient(187deg, #38c143 0%, #511fb0 100%);
       -webkit-background-clip: text;
       -moz-background-clip: text;
       -webkit-text-fill-color: transparent;

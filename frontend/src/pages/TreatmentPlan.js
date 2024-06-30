@@ -18,6 +18,7 @@ import { FiSettings } from 'react-icons/fi';
 import { FiThumbsUp, FiThumbsDown } from 'react-icons/fi';
 import { BsBookmarkHeart } from 'react-icons/bs';
 import { HiDotsVertical } from 'react-icons/hi';
+import { Link } from 'react-router-dom';
 
 const TreatmentPlan = () => {
    return (
@@ -58,17 +59,19 @@ const TreatmentPlan = () => {
                            </div>
                         </div>
                         <div className="Tr__nav__flex__2">
+                              <Link to={"/status"}>
                            <div className="flex align--center">
                               <FiSettings />
                               <p>Settings</p>
                            </div>
+                              </Link>
                         </div>
                      </div>
                   </div>
                </div>
                <div className="TreatmentWrapper__inner__2 Tr__inner ">
                   <h3>Overview</h3>
-                  <p>Welcome back, John! Your progress is really good. Keep it up</p>
+                  <p>Welcome back, vibez! Your progress is really good. Keep it up</p>
                   <div className="TreatmentWrapper__inner__2__header__box__wrapper mt--24">
                      <div className="header__box__wrapper__1">
                         <img src={leave} alt="leave" />
@@ -96,7 +99,7 @@ const TreatmentPlan = () => {
                            <h4 className="flex-1">Save</h4>
                         </div>
                         <div className="recommendations__wrapper__inner recommendations__wrapper__inner__body">
-                           <p className="flex-3">Based on your interest in cooking shows, how about trying out a new recipe this weekend? It can be a fun and therapeutic activity to relieve stress.</p>
+                           <p className="flex-3">start doing yoga and cardio , it will hepl you to relax your mind !</p>
                            <p className="flex-1">June 15th</p>
                            <p className="flex-1">
                               <div className="flex">
@@ -140,7 +143,7 @@ const TreatmentPlan = () => {
                <div className="TreatmentWrapper__inner__3 Tr__inner">
                   <div className="TreatmentWrapper__inner__3__header">
                      <img src={profileAvatar} alt="profileAvatar" />
-                     <h3 className="profile--name">John Doe</h3>
+                     <h3 className="profile--name">Vibez !</h3>
                      <label className="profile--position">Senior Software Engineer</label>
                   </div>
                   <div className="TreatmentWrapper__inner__3__body">

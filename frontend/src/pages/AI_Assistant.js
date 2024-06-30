@@ -37,6 +37,9 @@ const AI_Assistant = () => {
       if (chatContainerRef.current) {
          chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
       }
+
+      console.log(message)
+      console.log("afsefsfs",response)
    }, [response]);
 
 
@@ -85,6 +88,10 @@ const AI_Assistant = () => {
                   const updatedChatLogWithVoice = [...chatLog, { user: 'User', message: data }];
                   setChatLog(updatedChatLogWithVoice);
                   const voice_message = response.data.result;
+
+
+
+
                   axios
                      .post(`http://localhost:5001/api/analyze`, { message: voice_message })
                      .then((response) => {
@@ -93,6 +100,8 @@ const AI_Assistant = () => {
                         setResponse(response.data.result);
                      })
                      .catch((error) => console.error(error));
+
+                     
                   axios
                      .post(`http://localhost:5001/api/emotion_analyze`, { message: voice_message })
                      .then((response) => {
@@ -116,45 +125,99 @@ const AI_Assistant = () => {
       }
    };
 
-   const handleSubmit = (e) => {
-      e.preventDefault();
-      const updatedChatLog = [...chatLog, { user: 'User', message: message }];
-      setChatLog(updatedChatLog);
-      // console.log('{$process.env.REACT_APP_SERVER_ENDPOINT}')
+   const [question, setQuestion] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [generatingAnswer, setGeneratingAnswer] = useState(false);
 
-      setLoading(true);
+  async function generateAnswer(e) {
+    setGeneratingAnswer(true);
 
-      axios
-         .post(`http://localhost:5001/api/analyze`, { message: message })
-         .then((response) => {
-            const updatedChatLogWithAI = [...updatedChatLog, { user: 'AI_Consultant', message: response.data.result }];
-            setChatLog(updatedChatLogWithAI);
-            setResponse(response.data.result);
-            setLoading(false);
+    e.preventDefault();
+    setAnswer("Loading your answer... \n It might take upto 10 seconds");
 
-            axios
-               .post(`http://localhost:5001/api/emotion_analyze`, { message: message })
-               .then((response) => {
-                  setEmotion(response.data.emotion);
-                  console.log(message)
-                  console.log(response.data.emotion);
-                  updateRecommendation({"recommendation" : response.data.emotion})
-                  console.log('database update done')
-               })
-               .catch((error) => console.error(error));
 
-         })
-         .catch((error) => {
-            console.error(error);
-            setLoading(false);
-         });
+          
+    const updatedChatLog = [...chatLog, { user: 'User', message: message }];
+    setChatLog(updatedChatLog);
+    console.log('{$process.env.REACT_APP_SERVER_ENDPOINT}')
 
-      
-      
-      
-      setMessage('');
-   };
 
+    try {
+       setLoading(true);
+      const response = await axios({
+        url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${
+          import.meta.env.VITE_API_GENERATIVE_LANGUAGE_CLIENT
+        }`,
+        method: "post",
+        data: {
+           contents: [{ parts: [{ text: message }] }],
+         },
+      });
+
+      setResponse(
+        response["data"]["candidates"][0]["content"]["parts"][0]["text"]
+      );
+    } catch (error) {
+      console.log(error);
+      setResponse("Sorry - Something went wrong. Please try again!");
+    }
+
+    setGeneratingAnswer(false);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const handleSubmit = async (e) => {
+   e.preventDefault();
+ 
+   const updatedChatLog = [...chatLog, { user: 'User', message: message + ' suggest some psycotherapist in india with contact details' }];
+   setChatLog(updatedChatLog);
+   console.log(`${process.env.REACT_APP_SERVER_ENDPOINT}`);
+ 
+   setLoading(true);
+ 
+   try {
+     const response = await axios({
+       url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=AIzaSyCI-c9AA25b-e5k77HI-w6FvE_ucVc0f8M`,
+       method: 'post',
+       data: {
+         contents: [{ parts: [{ text: message }] }],
+       },
+     });
+ 
+     const generatedText = response.data?.candidates[0]?.content?.parts[0]?.text || 'No response received';
+     const updatedChatLogWithAI = [...updatedChatLog, { user: 'AI_Consultant', message: generatedText }];
+     setChatLog(updatedChatLogWithAI);
+     setResponse(generatedText);
+ 
+     const emotionResponse = await axios.post(`http://localhost:5001/api/emotion_analyze`, { message: generatedText });
+     setEmotion(emotionResponse.data.emotion);
+     updateRecommendation({ "recommendation": emotionResponse.data.emotion });
+ 
+     setLoading(false);
+   } catch (error) {
+     console.error('Error fetching response from Gemini API:', error);
+     setResponse('Error: Could not fetch response from the server');
+     setLoading(false);
+   }
+ 
+   setMessage('');
+ };
+  
    return (
       <>
          <Header />
@@ -174,7 +237,7 @@ const AI_Assistant = () => {
                                     <div className="flex">
                                        <img src={chat.user === 'AI_Consultant' ? logo : profileImg} alt={chat.user} />
                                        <div className="chat--item--meta">
-                                          <label>{chat.user === 'AI_Consultant' ? 'Depresio Assistant' : 'You'}</label>
+                                          <label>{chat.user === 'AI_Consultant' ? 'AI_Consultant' : 'vibez'}</label>
                                        </div>
                                     </div>
                                  </div>
@@ -195,9 +258,13 @@ const AI_Assistant = () => {
                                  <textarea placeholder="You can ask me anything! I am here to help 🙂" value={message} onChange={(e) => setMessage(e.target.value)}></textarea>
                               </div>
                               <div className="btn-flex-container assistant-main-btns">
-                                 <button type="submit" className="submit-button">
+
+
+                                 <button type="submit" className="submit-button" disabled={generatingAnswer}>
                                     <BsSendCheck />
                                  </button>
+
+
                                  <button type="button" className="record_button" onClick={startRecording}>
                                     {recording ? (
                                        <div className="wave">
